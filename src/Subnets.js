@@ -67,8 +67,8 @@ class Subnets extends Component {
                     </Table.Header>
                     <Table.Body>
                         {
-                            this.state.values.map(element => {
-                                return <Table.Row>
+                            this.state.values.map((element, index) => {
+                                return <Table.Row key={index}>
                                     <Table.Cell>
                                         {element.ip}
                                     </Table.Cell>
