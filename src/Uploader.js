@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Icon, Grid, Image } from "semantic-ui-react";
+import { Button, Table, Icon, Header } from "semantic-ui-react";
 import axios from 'axios';
 import config from 'react-global-configuration';
 
@@ -57,6 +57,10 @@ class Uploader extends Component {
     render() {
         return (
             <div className="uploader">
+                <Header as='h2'>
+                    <Icon name='file text outline' />
+                    <Header.Content>Content</Header.Content>
+                </Header>
                 <Table>
                     <Table.Header>
                         <Table.Row>

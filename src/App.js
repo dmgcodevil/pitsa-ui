@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Subnets from './Subnets.js'
 import Uploader from './Uploader'
-import { List, Table , Icon} from "semantic-ui-react";
+import { List, Table , Icon, Grid} from "semantic-ui-react";
 
 import config from 'react-global-configuration';
 import configuration from './config';
@@ -17,8 +17,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-         <Uploader/> 
-         <Subnets/> 
+          <Grid celled>
+    <Grid.Row>
+      <Grid.Column width={4}>
+      <Uploader/> 
+      </Grid.Column>
+      <Grid.Column width={12}>
+      <Subnets/>
+      </Grid.Column>
+    </Grid.Row>
+
+  </Grid>
+         {/* <Uploader/> 
+       
+         <Subnets/>  */}
        </div>
     );
   }

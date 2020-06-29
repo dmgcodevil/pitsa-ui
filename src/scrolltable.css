@@ -1,5 +1,5 @@
 
-tbody {
+/* tbody {
     display: block;
     height: 150px;
     overflow: auto;
@@ -10,7 +10,7 @@ tbody {
     display: table;
     width: 100%;
     table-layout: fixed;
-  }
+  } */
 
 .sidescroll {
     overflow-x: scroll;
