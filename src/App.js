@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import logo from './logo.svg';
 import './App.css';
 import Subnets from './Subnets.js'
 import Uploader from './Uploader'
 import IPFilters from './IPFilters'
 import UserAgents from './UserAgents'
 import ClicksStatistic from './ClicksStatistic'
-import { List, Table, Icon, Grid } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
 
 import config from 'react-global-configuration';
 import configuration from './config';

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table, Icon, Checkbox, Header } from "semantic-ui-react";
+import { Button, Table, Icon, Header } from "semantic-ui-react";
 import axios from 'axios';
 import config from 'react-global-configuration';
 import AddUserAgent from './AddUserAgent'
