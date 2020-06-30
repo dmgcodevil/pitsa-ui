@@ -4,6 +4,7 @@ import './App.css';
 import Subnets from './Subnets.js'
 import Uploader from './Uploader'
 import IPFilters from './IPFilters'
+import UserAgents from './UserAgents'
 import { List, Table, Icon, Grid } from "semantic-ui-react";
 
 import config from 'react-global-configuration';
@@ -32,11 +33,12 @@ class App extends Component {
               <IPFilters/>
             </Grid.Column>
           </Grid.Row>
-
+          <Grid.Row>
+            <Grid.Column>
+              <UserAgents/>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
-        {/* <Uploader/> 
-       
-         <Subnets/>  */}
       </div>
     );
   }
