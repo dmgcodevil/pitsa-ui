@@ -2,75 +2,56 @@ import React, { Component } from "react";
 import { Button, Table, Icon, Checkbox, Header } from "semantic-ui-react";
 import axios from 'axios';
 import config from 'react-global-configuration';
-import AddSubnet from './AddSubnet'
+import AddIPFilter from './AddIPFilter'
 import "./scrolltable.css";
 
 import * as  scrollable from './ScrollableTable'
 
 
-class Subnets extends Component {
-
+class IPFilters extends Component {
     host = config.get('server.host')
     port = config.get('server.port')
     addr = 'http://' + this.host + ':' + this.port
 
     state = {
         values: []
-    };
+    }
 
-    fetchSubnets = () => {
 
-        axios.get(this.addr + '/subnets/AS32934')
+    fetchPolicy = () => {
+
+        axios.get(this.addr + '/policy/AS32934')
             .then(response => {
                 this.updateState(response)
             })
             .catch(error => {
                 console.log(error);
             })
-    }
-
-    reloadSubnets = () => {
-        axios.post(this.addr + '/subnets/reload/AS32934')
-            .then(response => {
-                this.updateState(response)
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-
-    componentDidMount() {
-        this.fetchSubnets()
     }
 
     updateState(response) {
         const newState = Object.assign({}, this.state, {
-            values: response.data.subnets
+            values: response.data.ip_filters
         });
-
-        // store the new state object in the component's state
         this.setState(newState);
     }
-
 
     refreshState() {
         this.setState(this.state);
     }
 
-    activate(subnent, checked) {
-        subnent.enabled = checked
-        axios.post(this.addr + '/subnets/AS32934/setStatus?ip=' + subnent.ip + '&active=' + checked)
-            .catch(error => {
-                console.log(error);
-            })
-
+    componentDidMount() {
+        this.fetchPolicy()
+    }
+    addIPFilter(ipFilter) {
+        this.state.values.unshift(ipFilter)
         this.refreshState()
     }
 
-    delete(subnent) {
-        axios.post(this.addr + '/subnets/AS32934/delete?ip=' + subnent.ip)
+    delete(filter) {
+        axios.post(this.addr + '/policy/AS32934/ip/delete?ip=' + filter.ip)
             .then(response => {
-                var index = this.state.values.indexOf(subnent);
+                var index = this.state.values.indexOf(filter);
                 this.state.values.splice(index, 1);
                 this.refreshState()
 
@@ -80,29 +61,35 @@ class Subnets extends Component {
             })
     }
 
-    addSubnet(subnet)  {
-        this.state.values.unshift(subnet)
-        this.refreshState()
+    allow(filter, checked) {
+        axios.post(this.addr + '/policy/AS32934/ip/allow?ip=' + filter.ip+'&allowed='+checked)
+        .then(response => {
+            filter.allowed =  checked
+            this.refreshState()
+
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     render() {
         return (
             <div className="sidescroll">
                 <Header as='h2'>
-                    <Icon name='sitemap' />
-                    <Header.Content>Subnets</Header.Content>
+                    <Icon name='shield alternate' />
+                    <Header.Content>IP Filters</Header.Content>
                 </Header>
                 <Table striped selectable>
                     <Table.Header>
                         <scrollable.ScrollableTableRow>
                             <Table.HeaderCell>
-                                <AddSubnet onAdd={(res) => this.addSubnet(res)}></AddSubnet>
+                                <AddIPFilter onAdd={(res) => this.addIPFilter(res)} />
                             </Table.HeaderCell>
                         </scrollable.ScrollableTableRow>
                         <scrollable.ScrollableTableRow>
-                            <Table.HeaderCell>Subnet</Table.HeaderCell>
-                            <Table.HeaderCell>Version</Table.HeaderCell>
-                            <Table.HeaderCell />
+                            <Table.HeaderCell>IP</Table.HeaderCell>
+                            <Table.HeaderCell>Allowed</Table.HeaderCell>
                             <Table.HeaderCell />
                         </scrollable.ScrollableTableRow>
                     </Table.Header>
@@ -115,17 +102,14 @@ class Subnets extends Component {
                                         {element.ip}
                                     </Table.Cell>
                                     <Table.Cell>
-                                        {element.version}
-                                    </Table.Cell>
-                                    <Table.Cell>
                                         <Checkbox
-                                            checked={element.enabled}
-                                            onChange={(e, { checked }) => this.activate(element, checked)}
+                                            checked={element.allowed}
+                                            onChange={(e, { checked }) => this.allow(element, checked)}
                                         />
                                     </Table.Cell>
                                     <Table.Cell>
-                                        <Button  icon onClick={() => this.delete(element)}>
-                                            <Icon name='trash alternate outline' color='red' />
+                                        <Button icon onClick={() => this.delete(element)}>
+                                            <Icon name='trash alternate outline' />
                                         </Button>
                                     </Table.Cell>
                                 </scrollable.ScrollableTableRow>
@@ -137,24 +121,15 @@ class Subnets extends Component {
 
                     <Table.Footer fullWidth>
                         <scrollable.ScrollableTableRow>
-                            <Table.HeaderCell colSpan='2'>
+                            <Table.HeaderCell>
                                 <Button
                                     floated='right'
                                     icon
                                     labelPosition='left'
                                     size='small'
-                                    onClick={this.fetchSubnets}>
+                                    onClick={this.fetchPolicy}>
                                     <Icon name='refresh' />
                                     Refresh
-                                    </Button>
-                                <Button
-                                    floated='right'
-                                    icon
-                                    labelPosition='left'
-                                    size='small'
-                                    onClick={this.reloadSubnets}>
-                                    <Icon name='refresh' />
-                                    Reload
                                     </Button>
                             </Table.HeaderCell>
                         </scrollable.ScrollableTableRow>
@@ -166,4 +141,4 @@ class Subnets extends Component {
     }
 }
 
-export default Subnets;
+export default IPFilters;

@@ -86,7 +86,12 @@ class Uploader extends Component {
                                 />
                             </Table.Cell>
                             <Table.Cell>
-                                <Button onClick={() => this.upload('white')}>Upload</Button>
+                                <Button color='blue' animated='vertical' onClick={() => this.upload('white')}>
+                                    <Button.Content hidden>Upload</Button.Content>
+                                    <Button.Content visible>
+                                        <Icon name='upload' />
+                                    </Button.Content>
+                                </Button>
                             </Table.Cell>
                         </Table.Row>
 
@@ -107,7 +112,12 @@ class Uploader extends Component {
                                 />
                             </Table.Cell>
                             <Table.Cell>
-                                <Button onClick={() => this.upload('gray')}>Upload</Button>
+                                <Button color='blue' animated='vertical' onClick={() => this.upload('gray')}>
+                                    <Button.Content hidden>Upload</Button.Content>
+                                    <Button.Content visible>
+                                        <Icon name='upload' />
+                                    </Button.Content>
+                                </Button>
                             </Table.Cell>
                         </Table.Row>
 
