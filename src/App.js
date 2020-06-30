@@ -5,6 +5,7 @@ import Subnets from './Subnets.js'
 import Uploader from './Uploader'
 import IPFilters from './IPFilters'
 import UserAgents from './UserAgents'
+import ClicksStatistic from './ClicksStatistic'
 import { List, Table, Icon, Grid } from "semantic-ui-react";
 
 import config from 'react-global-configuration';
@@ -22,7 +23,19 @@ class App extends Component {
         <Grid celled>
           <Grid.Row>
             <Grid.Column width={4}>
-              <Uploader />
+              <Grid celled>
+                <Grid.Row>
+                  <Grid.Column>
+                    <Uploader/>
+                  </Grid.Column>
+                  </Grid.Row>
+                  <Grid.Row>
+                    <Grid.Column>
+              
+              <ClicksStatistic/>
+                    </Grid.Column>
+                  </Grid.Row>
+              </Grid>
             </Grid.Column>
             <Grid.Column width={12}>
               <Subnets />
